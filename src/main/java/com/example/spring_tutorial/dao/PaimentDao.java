@@ -13,6 +13,7 @@ public interface PaimentDao extends JpaRepository<Paiment,Long> {
     public Paiment findByCode(String code);
     public List<Paiment> findByCommandeReference(String reference);
     public int deleteByCommandeReference(String reference);
+    public int deleteByCode(String code);
     @Query("SELECT p FROM Paiment p WHERE p.commande.reference=:reference AND p.commande.total<p.commande.totalPayer")
     public List<Paiment> findCommandeNonPayer(@Param("reference") String reference);
 }

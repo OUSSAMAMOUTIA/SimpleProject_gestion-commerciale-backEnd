@@ -4,7 +4,6 @@ import com.example.spring_tutorial.bean.Commande;
 import com.example.spring_tutorial.bean.Paiment;
 import com.example.spring_tutorial.dao.PaimentDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +26,10 @@ public class PaimentService {
     public int deleteByCommandeReference(String reference) {
         return paimentDao.deleteByCommandeReference(reference);
     }
-
+    @Transactional
+    public int deleteByCode(String code) {
+        return paimentDao.deleteByCode(code);
+    }
 
     public List<Paiment> findCommandeNonPayer(String reference) {
         return paimentDao.findCommandeNonPayer(reference);
@@ -55,5 +57,16 @@ public class PaimentService {
             paimentDao.save(paiment);
             return 1;
          }
+    }
+    public void update(Paiment paiment){
+       paimentDao.save(paiment);
+    }
+    public void save(Commande commande, List<Paiment> paiments) {
+        for (Paiment paiment:paiments) {
+           double nv = paiment.getMontant()+commande.getTotalPayer();
+           commande.setTotalPayer(nv);
+           paiment.setCommande(commande);
+           paimentDao.save(paiment);
+        }
     }
 }

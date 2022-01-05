@@ -3,10 +3,7 @@ package com.example.spring_tutorial.ws;
 import com.example.spring_tutorial.bean.Commande;
 import com.example.spring_tutorial.service.CommandeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 @RestController
 @RequestMapping("gestion_commande/commande")
@@ -32,6 +29,10 @@ public class CommandeWs {
     @PutMapping("/payer/reference/{reference}/montant/{montantAPayer}")
     public int payer(@PathVariable String reference,@PathVariable double montantAPayer) {
         return commandeService.payer(reference, montantAPayer);
+    }
+    @PutMapping("/")
+    public void changeCommande(@RequestBody Commande commande) {
+        commandeService.changeCommande(commande);
     }
 
     @DeleteMapping("/reference/{reference}")

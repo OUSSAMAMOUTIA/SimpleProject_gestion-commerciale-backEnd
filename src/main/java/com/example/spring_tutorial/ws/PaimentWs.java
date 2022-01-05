@@ -3,7 +3,6 @@ package com.example.spring_tutorial.ws;
 import com.example.spring_tutorial.bean.Paiment;
 import com.example.spring_tutorial.service.PaimentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +21,9 @@ public class PaimentWs {
         return paimentService.findByCommandeReference(reference);
     }
 
-    @DeleteMapping("/commande/reference/{reference}")
-    public int deleteByCommandeReference(@PathVariable String reference) {
-        return paimentService.deleteByCommandeReference(reference);
+    @DeleteMapping("/code/{code}")
+    public int deleteByCode(@PathVariable String code) {
+        return paimentService.deleteByCode(code);
     }
     @GetMapping("/commande-non-paye/{reference}")
     public List<Paiment> findCommandeNonPayer(@PathVariable String reference) {
@@ -37,5 +36,9 @@ public class PaimentWs {
     @PostMapping("/")
     public int save(@RequestBody Paiment paiment) {
         return paimentService.save(paiment);
+    }
+    @PutMapping("/")
+    public void update(@RequestBody Paiment paiment) {
+        paimentService.update(paiment);
     }
 }

@@ -1,9 +1,9 @@
 package com.example.spring_tutorial.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Commande {
@@ -12,12 +12,16 @@ public class Commande {
     private String reference;
     private double total;
     private double totalPayer;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "commande")
+    private List<Paiment> paiments;
 
-    public Commande(Long id, String reference, double total, double totalPayer) {
-        this.id = id;
-        this.reference = reference;
-        this.total = total;
-        this.totalPayer = totalPayer;
+    public List<Paiment> getPaiments() {
+        return paiments;
+    }
+
+    public void setPaiments(List<Paiment> paiments) {
+        this.paiments = paiments;
     }
 
     public Commande() {

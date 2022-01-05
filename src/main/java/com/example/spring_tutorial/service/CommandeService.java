@@ -3,7 +3,6 @@ package com.example.spring_tutorial.service;
 import com.example.spring_tutorial.bean.Commande;
 import com.example.spring_tutorial.dao.CommandeDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +32,7 @@ public class CommandeService {
         }
         else{
             commandeDao.save(commande);
+            paimentService.save(commande,commande.getPaiments());
             return  1;
         }
     }
@@ -50,6 +50,10 @@ public class CommandeService {
     }
     public void update(Commande commande){
         commandeDao.save(commande);
+    }
+    public void changeCommande(Commande commande){
+        commandeDao.save(commande);
+        paimentService.save(commande,commande.getPaiments());
     }
     @Transactional
     public int deleteByReference(String reference) {
